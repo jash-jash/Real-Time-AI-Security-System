@@ -1,0 +1,16 @@
+# Ignore recordings (too large)
+recordings/
+
+# Ignore random test images
+random/
+
+# Ignore large model weights (optional)
+*.pt
+
+# Python cache
+__pycache__/
+*.pyc
+
+/data/authorized_faces/*/*.jpg
+/data/authorized_faces/*/*.png
+!.keep
