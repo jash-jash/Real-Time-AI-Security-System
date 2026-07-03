@@ -91,7 +91,7 @@ data/
 ## ⚡ How to Run
 ```bash
 # 1. Clone the repo
-git clone https://github.com/Subrahmanyeswar/AI-Security-System.git
+https://github.com/k-v-jaswanth/Real-Time-AI-Security-System.git
 cd AI-Security-System
 
 # 2. Install dependencies
