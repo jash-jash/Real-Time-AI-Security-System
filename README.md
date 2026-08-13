@@ -1,101 +1,112 @@
-# 🛡️ Real-Time AI Security System  
+# Real Time Security
 
-An AI-powered real-time security system that detects **faces, objects, and unauthorized access** using **YOLOv8 + DeepFace**.  
-When an intruder or unknown object is detected, the system raises an **alarm** and records video evidence automatically.  
+AI-powered real-time security dashboard with face recognition, object detection, and automatic email alerts.
 
----
+![Real Time Security](static/img/logo.png)
 
-## 🚀 Features
-- 🔍 Real-time face recognition (authorized vs unauthorized)  
-- 🎯 Object detection with YOLOv8  
-- 📹 Automatic recording of intrusions (saved in `recordings/`)  
-- 🔔 Instant alarm sound for alerts  
-- 🗂️ Supports multiple authorized users  
+## Features
 
----
+- Live camera monitoring in a modern web dashboard
+- Face recognition (authorized vs unauthorized)
+- YOLOv8 object detection
+- Emotion analysis
+- Automatic email alerts with unauthorized person snapshots
+- Dual recipient email support
+- Local alert image saving (`alerts/`)
+- Auto video recording on alerts (`recordings/`)
+- Left navigation UI with Real Time Security branding
 
-## 🛠️ Tech Stack
-- Python  
-- PyTorch  
-- YOLOv8 (Ultralytics)  
-- DeepFace (Face Recognition)  
-- OpenCV  
+## Tech Stack
 
----
+- Python + Flask
+- OpenCV
+- face_recognition
+- DeepFace
+- YOLOv8 (Ultralytics)
+- Gmail SMTP (App Password)
 
-## ⚙️ System Design
-The high-level pipeline for the Real-Time AI Security System:
+## Setup
 
-![Architecture](docs/architecture.png)
+1. Clone the repo:
 
-- Camera → Frame capture/preprocess  
-- YOLOv8 for object detection  
-- Face detection → DeepFace recognition vs. authorized whitelist  
-- Decision engine triggers: **alarm**, **recording**, **logging**
-
----
-
-## 📊 Performance & Results
-
-**Throughput**
-- Frames per second over time  
-  ![FPS over time](docs/fps_over_time.png)
-
-**Detection Behavior**
-- Unauthorized detections over time  
-  ![Unauthorized detections over time](docs/unauthorized_detections_over_time.png)
-
-**Face Analytics**
-- Expression distribution across detections  
-  ![Expression distribution](docs/expression_distribution.png)
-- Face recognition accuracy  
-  ![Face recognition accuracy](docs/face_recognition_accuracy.png)
-
-**Model Confidence**
-- Confidence scores distribution  
-  ![Confidence scores distribution](docs/confidence_scores_distribution.png)
-
-**Alerting & Recording**
-- End-to-end alert latency  
-  ![Alert latency](docs/alert_latency.png)
-- Recording durations distribution  
-  ![Recording durations](docs/recording_durations.png)
-
-> Note: graphs are generated from operational logs; values will vary based on environment, camera, and model config.
-
-
-## Authorized Faces Setup
-
-This project requires images of authorized persons for the face recognition system.  
-⚠️ For privacy and security reasons, these images are **not included** in the repository.
-
-To set it up:
-1. Go to the folder: `data/authorized_faces/`
-2. Create a subfolder for each authorized person (e.g., `person1`, `person2`)
-3. Place 10–20 clear face images of each person in their respective folder  
-   - Use `.jpg` or `.png`
-   - Include multiple angles/lighting conditions
-
-Example structure:
-data/
-└── authorized_faces/
-├── person1/
-│ ├── img1.jpg
-│ ├── img2.jpg
-└── person2/
-├── img1.png
-├── img2.png
-
-
-
-## ⚡ How to Run
 ```bash
-# 1. Clone the repo
-https://github.com/k-v-jaswanth/Real-Time-AI-Security-System.git
-cd AI-Security-System
+git clone https://github.com/k-v-jaswanth/Real-Time-AI-Security-System.git
+cd Real-Time-AI-Security-System
+```
 
-# 2. Install dependencies
+2. Install dependencies:
+
+```bash
 pip install -r requirements.txt
+```
 
-# 3. Run the system
+3. Create `.env` from the example:
+
+```bash
+copy .env.example .env
+```
+
+Set:
+
+```env
+SECURITY_EMAIL=realtimesecuritysystem@gmail.com
+SECURITY_EMAIL_PASSWORD=your-16-char-app-password
+SECURITY_ALERT_RECIPIENT=first@gmail.com
+SECURITY_ALERT_RECIPIENT_2=second@gmail.com
+```
+
+4. Add authorized faces:
+
+```text
+data/authorized_faces/
+  person_name/
+    photo1.jpg
+    photo2.jpg
+```
+
+5. Run:
+
+```bash
 python main.py
+```
+
+Open: [http://127.0.0.1:5000](http://127.0.0.1:5000)
+
+## Email Alerts
+
+When an unauthorized person is detected:
+
+1. Snapshot is saved in `alerts/`
+2. Same image is emailed to both configured recipients
+3. Optional short video is saved in `recordings/`
+
+Use a Gmail **App Password** (not your normal password):  
+https://myaccount.google.com/apppasswords
+
+## Live Public Link (optional)
+
+Keep the app running, then in another terminal:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\start_live.ps1
+```
+
+This creates a temporary public URL (PC must stay on).
+
+## Project Structure
+
+```text
+main.py                 # App entry
+app.py                  # Flask routes
+security_engine.py      # Camera + AI + email alerts
+templates/index.html    # Dashboard UI
+static/                 # CSS, JS, logo
+alerts/                 # Unauthorized snapshots
+recordings/             # Alert videos
+.env.example            # Email config template
+```
+
+## Notes
+
+- Do not commit `.env` (contains secrets)
+- Model weights (`.pt`) and runtime DB/logs are ignored
