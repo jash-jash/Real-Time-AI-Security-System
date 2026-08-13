@@ -28,3 +28,10 @@ authorized_encodings.pkl
 *.db
 
 .local_backup/
+
+# Large/runtime artifacts
+yolov8n.pt
+*.whl
+alarm.mp3
+authorized_encodings.pkl
+.local_backup/
