@@ -93,10 +93,14 @@ powershell -ExecutionPolicy Bypass -File .\start_live.ps1
 
 This creates a temporary public URL. It **stops** if the laptop sleeps or shuts down.
 
-## Always Online (cloud)
+## Always Online Website (no laptop needed)
 
-See [DEPLOY.md](DEPLOY.md) for Option B (DigitalOcean/VPS + IP camera).
-That stays online even when your laptop is closed.
+See [DEPLOY_WEBSITE.md](DEPLOY_WEBSITE.md) to host the dashboard on Render.
+This keeps the website online even when your laptop is off (camera still needs local PC).
+
+## Always Online with Camera (cloud + IP camera)
+
+See [DEPLOY.md](DEPLOY.md) for VPS + IP/RTSP camera hosting.
 
 ## Project Structure
 

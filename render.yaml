@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: real-time-security
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements-web.txt
+    startCommand: gunicorn -b 0.0.0.0:$PORT app:app
+    envVars:
+      - key: WEB_ONLY
+        value: "true"
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: SECURITY_EMAIL
+        sync: false
+      - key: SECURITY_EMAIL_PASSWORD
+        sync: false
+      - key: SECURITY_ALERT_RECIPIENT
+        sync: false
+      - key: SECURITY_ALERT_RECIPIENT_2
+        sync: false

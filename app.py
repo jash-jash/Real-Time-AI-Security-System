@@ -1,10 +1,16 @@
 """Flask web application for the Real-Time AI Security System."""
 
+import os
 import time
 
 from flask import Flask, Response, jsonify, render_template, request
 
-from security_engine import CameraManager, SecurityEngine
+WEB_ONLY = os.getenv("WEB_ONLY", "").lower() in {"1", "true", "yes"}
+
+if WEB_ONLY:
+    from lite_engine import CameraManager, SecurityEngine
+else:
+    from security_engine import CameraManager, SecurityEngine
 
 app = Flask(__name__)
 engine = SecurityEngine()
