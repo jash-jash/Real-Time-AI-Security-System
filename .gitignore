@@ -26,3 +26,5 @@ security_events.db
 security_log.txt
 authorized_encodings.pkl
 *.db
+
+.local_backup/
