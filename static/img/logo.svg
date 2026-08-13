@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Real Time Security logo">
+  <defs>
+    <linearGradient id="shieldGrad" x1="20" y1="8" x2="108" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2dd4bf"/>
+      <stop offset="55%" stop-color="#0f766e"/>
+      <stop offset="100%" stop-color="#115e59"/>
+    </linearGradient>
+    <linearGradient id="ringGrad" x1="16" y1="16" x2="112" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#99f6e4"/>
+      <stop offset="100%" stop-color="#14b8a6"/>
+    </linearGradient>
+  </defs>
+  <circle cx="64" cy="64" r="60" fill="#0b1620"/>
+  <circle cx="64" cy="64" r="56" fill="none" stroke="url(#ringGrad)" stroke-width="4"/>
+  <path d="M64 24l28 12v22c0 20-12.5 33.5-28 40-15.5-6.5-28-20-28-40V36l28-12z" fill="url(#shieldGrad)"/>
+  <path d="M64 34l18 8v16c0 13-8 22-18 26-10-4-18-13-18-26V42l18-8z" fill="#042f2e" opacity="0.35"/>
+  <path d="M52 66l8 8 16-18" fill="none" stroke="#ecfeff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="96" cy="34" r="7" fill="#fbbf24"/>
+  <circle cx="96" cy="34" r="3.5" fill="#fff7ed"/>
+</svg>

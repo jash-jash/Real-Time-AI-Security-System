@@ -1,0 +1,28 @@
+# Ignore recordings (too large)
+recordings/
+
+# Ignore alert snapshots
+alerts/
+
+# Ignore random test images
+random/
+
+# Ignore large model weights (optional)
+*.pt
+
+# Python cache
+__pycache__/
+*.pyc
+
+/data/authorized_faces/*/*.jpg
+/data/authorized_faces/*/*.png
+!.keep
+
+# Local secrets
+.env
+
+# Runtime data
+security_events.db
+security_log.txt
+authorized_encodings.pkl
+*.db

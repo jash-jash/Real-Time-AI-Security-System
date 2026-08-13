@@ -1,0 +1,43 @@
+# Core
+opencv-python==4.7.0.72
+numpy>=1.24.2
+
+pandas>=2.2.0
+
+# PyTorch (CUDA-enabled if available)
+torch
+torchvision
+torchaudio
+
+# Object detection (YOLOv8)
+ultralytics==8.0.196
+
+# Face recognition
+deepface==0.0.79
+face-recognition
+onnxruntime==1.15.1
+
+# Web dashboard
+flask>=3.0.0
+python-dotenv>=1.0.0
+
+# Voice input/output
+sounddevice==0.4.6
+soundfile==0.12.1
+pyttsx3==2.90
+pywin32==306
+
+# Speech-to-text
+openai-whisper==20231117
+
+# LLM (local AI brain)
+llama-cpp-python==0.2.78
+
+# Utils
+requests==2.31.0
+
+# Core
+matplotlib
+
+# Utilities
+playsound

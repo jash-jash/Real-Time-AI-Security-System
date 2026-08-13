@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Time Security</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/logo.svg') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=7">
+</head>
+<body>
+  <div class="shell">
+    <aside class="nav-rail" id="navRail">
+      <div class="nav-brand">
+        <img
+          class="brand-logo"
+          src="{{ url_for('static', filename='img/logo.svg') }}"
+          alt="Real Time Security logo"
+          width="48"
+          height="48"
+        >
+        <div>
+          <strong>Real Time Security</strong>
+          <span>AI Protection Suite</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-view="dashboard">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h7v7H4V4zm9 0h7v5h-7V4zM4 13h7v7H4v-7zm9 3h7v4h-7v-4z"/></svg>
+          </span>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-view="camera">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 7h11a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V9a2 2 0 012-2zm13 3l5-3v10l-5-3V10z"/></svg>
+          </span>
+          <span>Live Camera</span>
+        </button>
+        <button class="nav-item" data-view="features">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm8.5 3.5l-2-.5.5-2-2-.8-.8 2-1.7-1.2.8-2-2-.2-.5 2-2-.5V6h-2v2.3l-2 .5.5 2-2 .8.8 2-1.7 1.2.8 2-2 .2.5 2-2 .5V18h2v-2.3l2-.5-.5-2 2-.8-.8-2 1.7-1.2-.8-2 2-.2.5-2 2 .5V6h2v2.3l2 .5z"/></svg>
+          </span>
+          <span>Features</span>
+        </button>
+        <button class="nav-item" data-view="email">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 6h18v12H3V6zm0 0l9 7 9-7"/></svg>
+          </span>
+          <span>Email Alerts</span>
+        </button>
+        <button class="nav-item" data-view="events">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h10"/></svg>
+          </span>
+          <span>Events</span>
+        </button>
+        <button class="nav-item" data-view="system">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 5h16v4H4V5zm0 5h16v4H4v-4zm0 5h16v4H4v-4z"/></svg>
+          </span>
+          <span>System Info</span>
+        </button>
+      </nav>
+
+      <div class="nav-features">
+        <div class="nav-section-title">Quick Features</div>
+        <label class="nav-toggle">
+          <input type="checkbox" data-setting="face_recognition" checked>
+          <span>Face Recognition</span>
+        </label>
+        <label class="nav-toggle">
+          <input type="checkbox" data-setting="object_detection" checked>
+          <span>Object Detection</span>
+        </label>
+        <label class="nav-toggle">
+          <input type="checkbox" data-setting="email_alerts" checked>
+          <span>Email Alerts</span>
+        </label>
+        <label class="nav-toggle">
+          <input type="checkbox" data-setting="auto_recording" checked>
+          <span>Auto Recording</span>
+        </label>
+      </div>
+
+      <div class="nav-footer">
+        <div class="status-pill" id="statusPill">
+          <span class="dot"></span>
+          <span id="statusText">Idle</span>
+        </div>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div>
+          <h1 id="pageTitle">Dashboard</h1>
+          <p id="pageSubtitle">Real-time monitoring overview</p>
+        </div>
+        <div class="topbar-actions">
+          <button id="menuToggle" class="btn btn-ghost menu-toggle" aria-label="Toggle menu">Menu</button>
+          <button id="startBtn" class="btn btn-primary btn-with-icon">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5z"/></svg>
+            Start Camera
+          </button>
+          <button id="stopBtn" class="btn btn-danger btn-with-icon" disabled>
+            <svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+            Stop
+          </button>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="view active" id="view-dashboard">
+          <div class="stat-row">
+            <article class="stat-card">
+              <div class="stat-icon teal">
+                <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4V6zm2 2v8h12V8H6z"/></svg>
+              </div>
+              <div>
+                <span>Device</span>
+                <strong id="deviceInfo">-</strong>
+              </div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-icon blue">
+                <svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zm-7 8a7 7 0 0114 0H5z"/></svg>
+              </div>
+              <div>
+                <span>Authorized Faces</span>
+                <strong id="facesCount">-</strong>
+              </div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-icon amber">
+                <svg viewBox="0 0 24 24"><path d="M6 4h8l4 4v12H6V4zm8 1v3h3"/></svg>
+              </div>
+              <div>
+                <span>Recording</span>
+                <strong id="recordingState">No</strong>
+              </div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-icon green">
+                <svg viewBox="0 0 24 24"><path d="M3 6h18v12H3V6zm0 0l9 7 9-7"/></svg>
+              </div>
+              <div>
+                <span>Email Status</span>
+                <strong id="emailStateDash">-</strong>
+              </div>
+            </article>
+          </div>
+
+          <div class="dashboard-grid">
+            <section class="panel camera-panel">
+              <div class="panel-header">
+                <h2>Live Secure Camera</h2>
+              </div>
+              <div class="camera-wrap" id="cameraWrapDash">
+                <div class="camera-placeholder" id="cameraPlaceholder">
+                  <div class="placeholder-art" aria-hidden="true">
+                    <svg viewBox="0 0 120 120">
+                      <circle cx="60" cy="60" r="48" fill="none" stroke="currentColor" stroke-width="3" opacity="0.35"/>
+                      <circle cx="60" cy="60" r="28" fill="none" stroke="currentColor" stroke-width="3"/>
+                      <circle cx="60" cy="60" r="8" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <h3>Camera is not active</h3>
+                  <p>Click <strong>Start Camera</strong> to begin monitoring.</p>
+                </div>
+                <img id="videoFeed" class="video-feed hidden" alt="Live security feed">
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Recent Events</h2>
+              </div>
+              <div id="eventsListDash" class="events-list compact"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="view-camera">
+          <section class="panel camera-panel wide">
+            <div class="panel-header">
+              <h2>Full Camera Feed</h2>
+            </div>
+            <div class="camera-wrap large" id="cameraWrapFull">
+              <div class="camera-placeholder-note">Same live feed as dashboard. Start camera from the top bar.</div>
+              <div id="cameraFullMount"></div>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" id="view-features">
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Feature Controls</h2>
+              <button id="refreshFacesBtn" class="btn btn-ghost btn-with-icon">
+                <svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 10-2.3 5.5M20 12v-4m0 4h-4"/></svg>
+                Refresh Faces
+              </button>
+            </div>
+            <div class="feature-grid">
+              <label class="feature-card">
+                <input type="checkbox" data-setting="face_recognition" checked>
+                <div class="feature-icon">👤</div>
+                <div>
+                  <strong>Face Recognition</strong>
+                  <p>Match faces against authorized people.</p>
+                </div>
+              </label>
+              <label class="feature-card">
+                <input type="checkbox" data-setting="object_detection" checked>
+                <div class="feature-icon">🎯</div>
+                <div>
+                  <strong>Object Detection (YOLO)</strong>
+                  <p>Detect weapons and suspicious objects.</p>
+                </div>
+              </label>
+              <label class="feature-card">
+                <input type="checkbox" data-setting="emotion_analysis" checked>
+                <div class="feature-icon">🙂</div>
+                <div>
+                  <strong>Emotion Analysis</strong>
+                  <p>Analyze facial emotion on detections.</p>
+                </div>
+              </label>
+              <label class="feature-card">
+                <input type="checkbox" data-setting="email_alerts" checked>
+                <div class="feature-icon">✉</div>
+                <div>
+                  <strong>Email Alerts</strong>
+                  <p>Email unauthorized snapshots to both recipients.</p>
+                </div>
+              </label>
+              <label class="feature-card">
+                <input type="checkbox" data-setting="voice_alerts" checked>
+                <div class="feature-icon">🔊</div>
+                <div>
+                  <strong>Voice Alerts</strong>
+                  <p>Speak warnings on unauthorized events.</p>
+                </div>
+              </label>
+              <label class="feature-card">
+                <input type="checkbox" data-setting="auto_recording" checked>
+                <div class="feature-icon">⏺</div>
+                <div>
+                  <strong>Auto Recording on Alert</strong>
+                  <p>Save short clip when an alert triggers.</p>
+                </div>
+              </label>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" id="view-email">
+          <section class="panel email-panel">
+            <div class="panel-header">
+              <h2>Email Alerts</h2>
+            </div>
+            <p class="email-hint">
+              Alerts are sent from <strong id="emailFrom">-</strong> to both addresses below at the same time.
+            </p>
+            <div class="info-grid two">
+              <div class="info-card">
+                <span>Status</span>
+                <strong id="emailState">-</strong>
+              </div>
+              <div class="info-card">
+                <span>Current recipients</span>
+                <strong id="emailTo">-</strong>
+              </div>
+            </div>
+
+            <div class="recipient-grid">
+              <div class="recipient-card">
+                <div class="recipient-badge">1</div>
+                <label for="recipientEmail">Primary email</label>
+                <input
+                  id="recipientEmail"
+                  type="email"
+                  placeholder="first@gmail.com"
+                  autocomplete="email"
+                >
+              </div>
+              <div class="recipient-card">
+                <div class="recipient-badge">2</div>
+                <label for="recipientEmail2">Second email</label>
+                <input
+                  id="recipientEmail2"
+                  type="email"
+                  placeholder="second@gmail.com"
+                  autocomplete="email"
+                >
+              </div>
+            </div>
+
+            <div class="email-actions">
+              <button id="saveRecipientBtn" class="btn btn-ghost btn-with-icon" type="button">
+                <svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
+                Save Recipients
+              </button>
+              <button id="testEmailBtn" class="btn btn-primary btn-with-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 6h18v12H3V6zm0 0l9 7 9-7"/></svg>
+                Send Test Email
+              </button>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" id="view-events">
+          <section class="panel events-panel">
+            <div class="panel-header">
+              <h2>Security Events</h2>
+            </div>
+            <div id="eventsList" class="events-list"></div>
+          </section>
+        </section>
+
+        <section class="view" id="view-system">
+          <section class="panel">
+            <div class="panel-header">
+              <h2>System Info</h2>
+            </div>
+            <div class="info-grid two">
+              <div class="info-card">
+                <span>Device</span>
+                <strong id="deviceInfoSys">-</strong>
+              </div>
+              <div class="info-card">
+                <span>Authorized Faces</span>
+                <strong id="facesCountSys">-</strong>
+              </div>
+              <div class="info-card">
+                <span>Recording</span>
+                <strong id="recordingStateSys">No</strong>
+              </div>
+              <div class="info-card">
+                <span>Alert Images Folder</span>
+                <strong>alerts/</strong>
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="{{ url_for('static', filename='js/main.js') }}?v=7"></script>
+</body>
+</html>
