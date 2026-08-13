@@ -83,7 +83,7 @@ When an unauthorized person is detected:
 Use a Gmail **App Password** (not your normal password):  
 https://myaccount.google.com/apppasswords
 
-## Live Public Link (optional)
+## Live Public Link (optional, laptop must stay on)
 
 Keep the app running, then in another terminal:
 
@@ -91,7 +91,12 @@ Keep the app running, then in another terminal:
 powershell -ExecutionPolicy Bypass -File .\start_live.ps1
 ```
 
-This creates a temporary public URL (PC must stay on).
+This creates a temporary public URL. It **stops** if the laptop sleeps or shuts down.
+
+## Always Online (cloud)
+
+See [DEPLOY.md](DEPLOY.md) for Option B (DigitalOcean/VPS + IP camera).
+That stays online even when your laptop is closed.
 
 ## Project Structure
 

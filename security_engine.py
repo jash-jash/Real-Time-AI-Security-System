@@ -633,6 +633,14 @@ class CameraManager:
         self.cap = None
         self.thread = None
         self.start_lock = threading.Lock()
+        # 0 = laptop webcam; or RTSP/HTTP IP camera URL for cloud/VPS hosting
+        self.camera_source = os.getenv("CAMERA_SOURCE", "0")
+
+    def _open_capture(self):
+        source = self.camera_source.strip()
+        if source.isdigit():
+            return cv2.VideoCapture(int(source))
+        return cv2.VideoCapture(source)
 
     def start(self):
         with self.start_lock:
@@ -641,14 +649,18 @@ class CameraManager:
             if self.thread and self.thread.is_alive():
                 return True, "Camera is already running"
 
-            self.cap = cv2.VideoCapture(0)
+            self.cap = self._open_capture()
             if not self.cap.isOpened():
                 self.cap = None
-                return False, "Could not access webcam. Check permissions and try again."
+                return (
+                    False,
+                    "Could not access camera. For cloud hosting set CAMERA_SOURCE "
+                    "to an IP/RTSP camera URL (laptop webcam only works on your PC).",
+                )
 
             self.engine.camera_active = True
             self.engine.current_status = "Monitoring"
-            self.engine.log_event("System", "Secure camera started")
+            self.engine.log_event("System", f"Secure camera started ({self.camera_source})")
             self.thread = threading.Thread(target=self._capture_loop, daemon=True)
             self.thread.start()
             return True, "Secure camera started"

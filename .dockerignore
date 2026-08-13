@@ -1,0 +1,13 @@
+.env
+.local_backup/
+__pycache__/
+*.pyc
+.git/
+recordings/
+alerts/
+*.pt
+*.whl
+security_events.db
+security_log.txt
+authorized_encodings.pkl
+alarm.mp3
